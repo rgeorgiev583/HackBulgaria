@@ -1,0 +1,27 @@
+package com.hackbulgaria.corejava.exam1.logger;
+
+public class Logger {
+    int level;
+    
+    public Logger()
+    {
+        this.level = 3;
+    }
+    
+    public Logger(Integer level)
+    {
+        if (level > 0) {
+            this.level = level;
+        }
+        else {
+            this.level = 3;
+        }
+    }
+    
+    public void log(int level, String message)
+    {
+        if (level <= this.level) {
+            System.out.println(message);
+        }
+    }
+}
