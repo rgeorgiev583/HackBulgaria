@@ -1,0 +1,19 @@
+package com.hackbulgaria.corejava.practicalteamwork.asciiartviewer;
+
+import java.awt.image.BufferedImage;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.imageio.ImageIO;
+
+public class ASCIIArtViewer {
+	BufferedImage image;
+	
+	public static void main(String[] args) {
+		Charset charset = Charset.forName("ASCII");
+		image = ImageIO.read(new URL(args[0]));
+		
+	}
+}
