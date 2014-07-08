@@ -1,0 +1,10 @@
+package com.hackbulgaria.corejava.furniture;
+
+public abstract class Material {
+	protected static int pricePerKg;
+	
+	public abstract int getPricePerKg();
+	public abstract String getName();
+	
+	public static void setPricePerKg(int pricePerKg);
+}

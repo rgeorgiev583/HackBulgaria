@@ -1,0 +1,22 @@
+package com.hackbulgaria.corejava.asciiplayer;
+
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class SequencePlayer extends FilePlayer {
+	protected List<BufferedImage> sequence;
+	
+	public SequencePlayer(String path) {
+		super(path);
+	}
+	
+	public List<String> played() {
+		List<String> enc_sequence = new ArrayList<String>();
+		
+		for (BufferedImage item : sequence) {
+			ImagePlayer item_player = new ImagePlayer(item);
+			enc_sequence.add(item_player.played());
+		}
+	}
+}

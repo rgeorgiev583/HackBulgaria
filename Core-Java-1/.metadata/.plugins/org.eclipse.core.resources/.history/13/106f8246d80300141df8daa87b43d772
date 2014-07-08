@@ -1,0 +1,13 @@
+package com.hackbulgaria.corejava.asciiplayer;
+
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+
+public class GifPlayer extends SequencePlayer {
+	public GifPlayer(String path) {
+		super(path);
+		
+		ImageReader = (ImageReader) ImageIO.getImageReadersByFormatName("gif").next();
+		
+	}
+}

@@ -1,0 +1,17 @@
+package com.hackbulgaria.corejava.jaxb;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class CoreJavaCourse {
+	private List<Student> enrolledStudents = new ArrayList<Student>();
+	private int courseId;
+	private String courseName;
+	
+	public CoreJavaCourse() {
+		this.courseId = courseId;
+		this.courseName = courseName;
+	}
+	
+	
+}

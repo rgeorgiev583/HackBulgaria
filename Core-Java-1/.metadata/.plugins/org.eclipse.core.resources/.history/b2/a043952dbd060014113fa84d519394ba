@@ -1,0 +1,5 @@
+package com.hackbulgaria.corejava.furniture;
+
+public abstract class Furniture {
+
+}

@@ -1,0 +1,24 @@
+package com.hackbulgaria.corejava.asciiplayer;
+
+import javax.imageio.ImageIO;
+
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.FrameGrabber;
+
+public class VideoPlayer extends SequencePlayer {
+	public VideoPlayer(String path) {
+		super(path);
+		
+		FFmpegFrameGrabber g = new FFmpegFrameGrabber(file);
+		
+		try {
+			g.start();
+	
+			for (int i = 0 ; i < 50 ; i++) {
+			    sequence.add(g.grab().getBufferedImage());
+			}
+	
+			g.stop();
+		} catch ()
+	}
+}

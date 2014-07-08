@@ -1,0 +1,9 @@
+package com.hackbulgaria.corejava.furniture;
+
+public abstract class Furniture {
+	public Furniture() {
+	}
+	
+	public abstract int getPrice();
+	public abstract String getDescription();
+}

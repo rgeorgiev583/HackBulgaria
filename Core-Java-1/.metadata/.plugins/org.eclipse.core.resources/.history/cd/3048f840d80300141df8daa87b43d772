@@ -1,0 +1,7 @@
+package com.hackbulgaria.corejava.asciiplayer;
+
+public class GifPlayer extends SequencePlayer {
+	public GifPlayer(String path) {
+		super(path);
+	}
+}
