@@ -1,9 +1,0 @@
-package com.hackbulgaria.corejava.asciiplayer;
-
-public class VideoPlayer extends SequencePlayer {
-	public VideoPlayer(String path) {
-		super(this);
-		
-		
-	}
-}

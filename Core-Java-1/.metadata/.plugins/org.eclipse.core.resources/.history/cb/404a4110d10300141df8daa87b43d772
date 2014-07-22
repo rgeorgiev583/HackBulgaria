@@ -1,5 +1,0 @@
-package com.hackbulgaria.corejava.asciiplayer;
-
-public abstract class SequencePlayer extends FilePlayer {
-	protected List<BufferedImage>
-}
