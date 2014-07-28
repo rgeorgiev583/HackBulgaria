@@ -31,7 +31,7 @@ public class Main {
 		System.out.println(" - " + );
 	}*/
 	
-	public void runDOMParser() {
+	public void runDOMParser() throws ParserConfigurationException, SAXException, IOException {
 		//long startTime = System.nanoTime();
 		File file = new File("/tmp/metawiki-latest-stub-articles.xml");
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
