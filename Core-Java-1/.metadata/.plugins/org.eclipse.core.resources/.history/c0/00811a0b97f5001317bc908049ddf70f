@@ -1,5 +1,0 @@
-package com.hackbulgaria.corejava.exam1.logger;
-
-public class DateLogger extends Logger {
-
-}
