@@ -8,6 +8,7 @@
   <description>
 </description>
   <build>
+    <finalName>AsciiService</finalName>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
@@ -37,7 +38,7 @@
             </goals>
             <configuration>
               <tasks>
-                <copy file="target/AsciiService-0.0.1.war" todir="/home/radoslav/papps/tomcat/webapps" />
+                <copy file="target/AsciiService.war" todir="/home/radoslav/papps/tomcat/webapps" />
               </tasks>
             </configuration>
           </execution>
