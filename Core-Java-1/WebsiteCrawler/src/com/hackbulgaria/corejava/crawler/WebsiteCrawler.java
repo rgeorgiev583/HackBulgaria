@@ -17,8 +17,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WebsiteCrawler {
-	private URL indexURL, currentPageURL;
-	private List<URL> visitedURLs;
+	private final URL indexURL;
+	private URL currentPageURL;
+	private final List<URL> visitedURLs;
 	
 	public WebsiteCrawler(URL indexURL) {
 		this.indexURL = indexURL;
