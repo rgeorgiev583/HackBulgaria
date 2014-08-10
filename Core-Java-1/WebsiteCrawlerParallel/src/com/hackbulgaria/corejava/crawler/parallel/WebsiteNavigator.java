@@ -4,27 +4,35 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
 
 public class WebsiteNavigator {
-	public final URL indexURL;
-    public final List<URL> visitedURLs;	
     public URL currentPageURL;
+	public final URL indexURL;
+    public final List<URL> visitedURLs;
+    public final boolean debug;
 
 	public WebsiteNavigator(URL indexURL) {
+        this.currentPageURL = indexURL;
 		this.indexURL = indexURL;
-		this.currentPageURL = indexURL;
 		this.visitedURLs = new ArrayList<URL>();
+		this.debug = false;
 	}
+
+    public WebsiteNavigator(URL indexURL, boolean debug) {
+        this.currentPageURL = indexURL;
+        this.indexURL = indexURL;
+        this.visitedURLs = new ArrayList<URL>();
+        this.debug = debug;
+    }
+
+    public URL getCurrentPageURL() {
+        return currentPageURL;
+    }
 	
 	public URL getIndexURL() {
 		return indexURL;
-	}
-
-	public URL getCurrentPageURL() {
-		return currentPageURL;
 	}
 
 	public void goToPage(URI pageURI) throws MalformedURLException, URISyntaxException {
@@ -36,7 +44,7 @@ public class WebsiteNavigator {
 	}
     
     public void goToMatchingLinkURL(String needle) {
-        WebsiteCrawler crawler = new WebsiteCrawler(currentPageURL, needle);
+        WebsiteCrawler crawler = new WebsiteCrawler(currentPageURL, needle, debug);
         crawler.start();
         
         try {
@@ -44,26 +52,11 @@ public class WebsiteNavigator {
             currentPageURL = crawler.currentPageURL;
             visitedURLs.addAll(crawler.visitedURLs);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            if (debug) {
+                e.printStackTrace();
+            } else {
+                System.err.println("ERROR:  Sorry, a thread-related problem occurred.  Halting program execution.");
+            }
         }
     }
-
-	public static void main(String[] args) {
-        try {
-            final SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
-            long startTime = System.currentTimeMillis();
-            System.err.printf("Started at %s...\n", dateFormat.format(startTime));
-            WebsiteNavigator navigator;
-            navigator = new WebsiteNavigator(new URL(args[0]));
-            navigator.goToMatchingLinkURL(args[1]);
-    		System.out.println(navigator.currentPageURL);
-            long endTime = System.currentTimeMillis();
-            System.err.printf("Finished at %s.\n", dateFormat.format(endTime));
-            System.err.printf("Time elapsed (ms): %d\n", endTime - startTime);
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-	}
 }
