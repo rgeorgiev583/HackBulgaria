@@ -87,9 +87,9 @@ public class WebpageCrawler extends Thread {
 
     public void goToFirstMatchingLinkURL() throws IOException, URISyntaxException {
         websiteCrawler.visitedURLs.add(pageURL);
-        /// <debug>
-        //System.err.println(pageURL);
-        /// </debug>
+        if (websiteCrawler.debug) {
+            System.err.println(pageURL);
+        }
         String pageContent = getContent(pageURL);
         
         if (pageContent != null) {
@@ -99,7 +99,6 @@ public class WebpageCrawler extends Thread {
                 synchronized (websiteCrawler.monitor) {
                     websiteCrawler.monitor.notify();
                 }
-                //
             } else {
                 List<URL> pageLinkURLs = getAllLinkURLs(pageURL);
                 
@@ -119,8 +118,11 @@ public class WebpageCrawler extends Thread {
         try {
             goToFirstMatchingLinkURL();
         } catch (IOException | URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            if (websiteCrawler.debug) {
+                e.printStackTrace();
+            } else {
+                System.err.println("ERROR:  Sorry, an URL or connection-related problem occurred.  Halting program execution.");
+            }
         }
     }
 }

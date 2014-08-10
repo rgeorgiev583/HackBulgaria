@@ -8,11 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,13 +17,22 @@ public class WebsiteCrawler {
 	private final URL indexURL;
 	private URL currentPageURL;
 	private final List<URL> visitedURLs;
+	public final boolean debug;
 	
 	public WebsiteCrawler(URL indexURL) {
 		this.indexURL = indexURL;
-		currentPageURL = indexURL;
-		visitedURLs = new ArrayList<URL>();
+		this.currentPageURL = indexURL;
+		this.visitedURLs = new ArrayList<URL>();
+		this.debug = false;
 	}
-	
+	   
+    public WebsiteCrawler(URL indexURL, boolean debug) {
+        this.indexURL = indexURL;
+        this.currentPageURL = indexURL;
+        this.visitedURLs = new ArrayList<URL>();
+        this.debug = debug;
+    }
+    	
 	public URL getIndexURL() {
 		return indexURL;
 	}
@@ -37,18 +43,15 @@ public class WebsiteCrawler {
 
 	public void goToPage(URI pageURI) throws MalformedURLException, URISyntaxException {
 		currentPageURL = currentPageURL.toURI().resolve(pageURI).toURL();
-		visitedURLs.clear();
 	}
 	
 	public void goToIndex() {
 		currentPageURL = indexURL;
-		visitedURLs.clear();
 	}
 	
 	private static String getContent(URL url) throws IOException {
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		connection.setRequestMethod("GET");
-		
+
 		if (connection.getResponseCode() == 200) {
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			StringBuilder response = new StringBuilder();
@@ -97,9 +100,9 @@ public class WebsiteCrawler {
 
 	public void goToFirstMatchingLinkURL(URL pageURL, String needle) throws IOException, URISyntaxException {
 		visitedURLs.add(pageURL);
-		/// <debug>
-		//System.err.println(pageURL);
-		/// </debug>
+		if (debug) {
+		    System.err.println(pageURL);
+		}
 		String pageContent = getContent(pageURL);
 		
 		if (pageContent != null) {
@@ -123,19 +126,15 @@ public class WebsiteCrawler {
 		goToFirstMatchingLinkURL(currentPageURL, needle);
 	}
 	
-	
 	public static String findDeep(URL indexURL, String needle) throws IOException, URISyntaxException {
 		WebsiteCrawler crawler = new WebsiteCrawler(indexURL);
 		crawler.goToMatchingLinkURL(needle);
 		return crawler.getCurrentPageURL().toString();
 	}
 	
-	public static void main(String[] args) {
-		try {
-			System.out.println(findDeep(new URL(args[0]), args[1]));
-		} catch (IOException | URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	public static String findDeep(URL indexURL, String needle, boolean debug) throws IOException, URISyntaxException {
+        WebsiteCrawler crawler = new WebsiteCrawler(indexURL, debug);
+        crawler.goToMatchingLinkURL(needle);
+        return crawler.getCurrentPageURL().toString();
+    }
 }
